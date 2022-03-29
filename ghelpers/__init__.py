@@ -63,6 +63,20 @@ def get_secret(secret_name, project_id=None, version="latest"):
 
     return response.payload.data.decode("UTF-8").strip()
 
+def get_secrets(secret_name,format='yaml'):
+    """
+    Get secrets as Python Dict
+    :param secret_name:
+    :param format:
+    :return:
+    """
+    if format == 'yaml':
+        import yaml
+        yaml_text = get_secret(secret_name)
+        secrets = yaml.safe_load(yaml_text)
+        return secrets
+    else:
+        raise Exception(f"Format {format} not supported")
 
 def get_shell(command):
     """
