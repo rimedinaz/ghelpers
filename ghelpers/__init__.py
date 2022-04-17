@@ -63,7 +63,7 @@ def get_secret(secret_name, project_id=None, version="latest"):
 
     return response.payload.data.decode("UTF-8").strip()
 
-def get_secrets(secret_name,format='yaml'):
+def get_secrets(secret_name, format='yaml'):
     """
     Get secrets as Python Dict
     :param secret_name:
@@ -78,28 +78,3 @@ def get_secrets(secret_name,format='yaml'):
     else:
         raise Exception(f"Format {format} not supported")
 
-def get_shell(command):
-    """
-    Execute the shell command and return the output as a string
-    :param command: string or list command
-    :return: output
-    """
-    try:
-        import subprocess
-        import platform
-
-        command_list = []
-
-        if isinstance(command, str):
-            command_list = list(command.split(" "))
-        elif isinstance(command, list):
-            command_list = command
-
-        if platform.system() == 'Windows':
-            shell = True
-        else:
-            shell = False
-
-        return subprocess.run(command_list, stdout=subprocess.PIPE, shell=shell).stdout.decode('utf-8').strip()
-    except Exception as e:
-        raise Exception(f"Can't execute command: '{str(command)}'... {e}")
